@@ -18,8 +18,8 @@ trait SpellCheckerService:
   /**
     * Get the syntactically closest word in the dictionary from the given misspelled word, using the "stringDistance"
     * function. If the word is a number or a pseudonym, this function just returns it.
-    * @param misspelledWord the mispelled word to correct
-    * @return the closest normalized word from "mispelledWord"
+    * @param misspelledWord the misspelled word to correct
+    * @return the closest normalized word from "misspelledWord"
     */
   def getClosestWordInDictionary(misspelledWord: String): String
 end SpellCheckerService
