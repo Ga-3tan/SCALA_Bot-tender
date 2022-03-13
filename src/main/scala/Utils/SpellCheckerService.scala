@@ -26,8 +26,43 @@ end SpellCheckerService
 
 class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellCheckerService:
   // TODO - Part 1 Step 2
-  def stringDistance(s1: String, s2: String): Int = ???
+  def stringDistance(s1: String, s2: String): Int =
+    (s1, s2) match
+      case (s1,s2) if (s1.length min s2.length) == 0 => s1.length max s2.length
+      case (s1,s2) if s1.head == s2.head => stringDistance(s1.tail, s2.tail)
+      case _ => 1 + stringDistance(s1.tail, s2) min stringDistance(s1, s2.tail) min stringDistance(s1.tail, s2.tail)
 
   // TODO - Part 1 Step 2
-  def getClosestWordInDictionary(misspelledWord: String): String = ???
+  def getClosestWordInDictionary(misspelledWord: String): String =
+    if misspelledWord.head == '_' || """(\d+)""".r.matches(misspelledWord) then return misspelledWord
+
+//    // TODO autres approches à supprimer ?
+//    val nearestWord = dictionary.map((key, _) => (key, stringDistance(key, misspelledWord)))
+//      .toList
+//      .minBy((_, value) => value) // ne prend pas en compte l'ordre alphabetique
+
+//    val nearestWord = dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
+//      stringDistance(key, misspelledWord) match
+//        case dist if dist < acc._2 => (value._1, dist)
+//        case dist if dist == acc._2 && value._1 < acc._1 => (value._1, dist)
+//        case _ => acc
+//    })
+
+    val nearestWord = dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
+      val dist = stringDistance(value._1, misspelledWord)
+      if dist < acc._2 || (dist == acc._2 && value._1 < acc._1) then
+        (value._1, dist)
+      else
+        acc
+    })
+
+    dictionary(nearestWord._1)
+
+//    // TODO Illisible à supprimer ?
+//    dictionary(dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
+//      stringDistance(key, misspelledWord) match
+//        case dist if dist < acc._2 || (dist == acc._2 && value._1 < acc._1) => (value._1, dist)
+//        case _ => acc
+//    })._1)
+
 end SpellCheckerImpl
