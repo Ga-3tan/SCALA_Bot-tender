@@ -12,5 +12,13 @@ trait Tokenized:
 
 class TokenizedImpl(val tokens: Array[(String, Token)]) extends Tokenized:
   // TODO - Part 1 Step 3
-  def nextToken(): (String, Token) = ???
+  var tokensCurrent: Array[(String, Token)] = tokens
+
+  def nextToken(): (String, Token) = {
+    if tokensCurrent.isEmpty then ("EOL", Token.EOL)
+    else
+      val next = tokensCurrent.head
+      tokensCurrent = tokensCurrent.tail
+      next
+  }
 end TokenizedImpl

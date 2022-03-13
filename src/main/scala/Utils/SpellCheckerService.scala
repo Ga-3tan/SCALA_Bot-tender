@@ -57,9 +57,9 @@ class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellChecker
 
   // TODO - Part 1 Step 2
   def getClosestWordInDictionary(misspelledWord: String): String = {
-    if misspelledWord.toDoubleOption.isEmpty || misspelledWord.head == '_' then
+    if misspelledWord.toDoubleOption.isDefined || misspelledWord.head == '_' then
       misspelledWord
     else
-      dictionary.map((k,v) => (k, stringDistance(misspelledWord, k))).minBy((k, d) => d).head
+      dictionary.map((k,v) => (k, v, stringDistance(misspelledWord, k))).minBy((k, v, d) => d)._2
   }
 end SpellCheckerImpl
