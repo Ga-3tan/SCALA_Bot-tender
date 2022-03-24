@@ -1,7 +1,7 @@
 package Chat
 
 import Chat.Token.*
-import Utils.{Dictionary, SpellCheckerImpl, SpellCheckerService}
+import Utils.SpellCheckerService
 
 class TokenizerService(spellCheckerSvc: SpellCheckerService):
   /**
@@ -10,12 +10,14 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
     * @return A Tokenizer which allows iteration over the tokens of the input
     */
   // TODO - Part 1 Step 3
-  def tokenize(input: String): Tokenized = {
-    val spellChecker = SpellCheckerImpl(Dictionary.dictionary)
-    var tokens = input.split("[ ']").map(s => s.replaceAll("[.,!?*]","")).filter(_.nonEmpty)
-    tokens = tokens.map(s => spellChecker.getClosestWordInDictionary(s))
-    TokenizedImpl(tokens.map(s => (s, getToken(s))))
-  }
+  def tokenize(input: String): Tokenized =
+    val normalizedTokens = input.replaceAll("[,.!?*]", "")
+      .replaceAll("\'", " ")
+      .split("\\s+") // one or more space
+      .map(rawToken => spellCheckerSvc.dictionary.getOrElse(rawToken, spellCheckerSvc.getClosestWordInDictionary(rawToken)))
+
+    TokenizedImpl(normalizedTokens.map(s => (s, getToken(s))))
+  end tokenize
 
   def getToken(s: String): Token = {
     s match {
@@ -24,20 +26,20 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "svp" => Token.SVP
       case "assoiffe" => Token.ASSOIFFE
       case "affame" => Token.AFFAME
-        // Actions
+      // Actions
       case "etre" => Token.ETRE
       case "vouloir" => Token.VOULOIR
-        // Logic Operators
+      // Logic Operators
       case "et" => Token.ET
       case "ou" => Token.OU
-        // Products
+      // Products
       case "biere" => Token.PRODUCT
       case "croissant" => Token.PRODUCT
-        // Util
+      // Util
       case a if s.head == '_' => Token.PSEUDO
       case a if s.toDoubleOption.isDefined => Token.NUM
       case "EOL" => Token.EOL
-      case "" => Token.BAD
+      case "" => Token.BAD // QUESTION TODO
       case _ => Token.UNKNOWN
     }
   }

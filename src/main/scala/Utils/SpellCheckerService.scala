@@ -29,37 +29,51 @@ end SpellCheckerService
 
 class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellCheckerService:
   // TODO - Part 1 Step 2
+  def stringDistance(s1: String, s2: String): Int =
+    (s1, s2) match
+      case (s1,s2) if (s1.length min s2.length) == 0 => s1.length max s2.length
+      case (s1,s2) if s1.head == s2.head => stringDistance(s1.tail, s2.tail)
+      case _ => 1 + stringDistance(s1.tail, s2) min stringDistance(s1, s2.tail) min stringDistance(s1.tail, s2.tail)
+  /* // Tail recursive version
   def stringDistance(s1: String, s2: String): Int = {
 
     // Process the colon of the levenshtein matrix. Each iteration we move to the next colon.
     @tailrec
-    def procCol(s1: String, s2: String, r:Array[Int], c:Int): Int = {
+    def processRow(s1: String, s2: String, r:Array[Int], c:Int): Int = {
       if s2.isEmpty then return r.last
-      val updateRow = procRow(s1,s2,r,0,c)
-      procCol(s1, s2.tail, updateRow, c+1)
+      val updateRow = processCol(s1,s2,r,0,c)
+      processRow(s1, s2.tail, updateRow, c+1)
     }
 
     // Process the row of the levenshtein matrix. Each iteration we process the next cell of the row.
     @tailrec
-    def procRow(s1: String, s2: String, r:Array[Int], rIndex:Int, c:Int): Array[Int] = {
+    def processCol(s1: String, s2: String, r:Array[Int], rIndex:Int, c:Int): Array[Int] = {
       if s1.isEmpty then
         r(rIndex) = c
         return r
       var current: Int =  c min r(rIndex) min r(rIndex+1)
       if s1.head != s2.head then current += 1
       r(rIndex) = c
-      procRow(s1.tail, s2, r, rIndex+1, current)
+      processCol(s1.tail, s2, r, rIndex+1, current)
     }
 
     val row: Array[Int] = (0 to s1.length).toArray
-    procCol(s1,s2, row, 1)
+    processRow(s1,s2, row, 1)
   }
+  */
 
   // TODO - Part 1 Step 2
-  def getClosestWordInDictionary(misspelledWord: String): String = {
-    if misspelledWord.toDoubleOption.isDefined || misspelledWord.head == '_' then
-      misspelledWord
-    else
-      dictionary.map((k,v) => (k, v, stringDistance(misspelledWord, k))).minBy((k, v, d) => d)._2
-  }
+  def getClosestWordInDictionary(misspelledWord: String): String =
+    if misspelledWord.toDoubleOption.isDefined || misspelledWord.head == '_' then return misspelledWord
+
+    val nearestWord = dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
+      val dist = stringDistance(value._1, misspelledWord)
+      if dist < acc._2 || (dist == acc._2 && value._1 < acc._1) then
+        (value._1, dist)
+      else
+        acc
+    })
+
+    dictionary(nearestWord._1)
+
 end SpellCheckerImpl
