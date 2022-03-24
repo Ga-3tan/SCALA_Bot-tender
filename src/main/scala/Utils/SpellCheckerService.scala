@@ -34,7 +34,8 @@ class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellChecker
       case (s1,s2) if (s1.length min s2.length) == 0 => s1.length max s2.length
       case (s1,s2) if s1.head == s2.head => stringDistance(s1.tail, s2.tail)
       case _ => 1 + stringDistance(s1.tail, s2) min stringDistance(s1, s2.tail) min stringDistance(s1.tail, s2.tail)
-  /* // Tail recursive version
+  /*
+  // Tail recursive version
   def stringDistance(s1: String, s2: String): Int = {
 
     // Process the colon of the levenshtein matrix. Each iteration we move to the next colon.
@@ -59,8 +60,7 @@ class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellChecker
 
     val row: Array[Int] = (0 to s1.length).toArray
     processRow(s1,s2, row, 1)
-  }
-  */
+  }*/
 
   // TODO - Part 1 Step 2
   def getClosestWordInDictionary(misspelledWord: String): String =

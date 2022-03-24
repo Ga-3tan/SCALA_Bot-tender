@@ -38,8 +38,6 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       // Util
       case a if s.head == '_' => Token.PSEUDO
       case a if s.toDoubleOption.isDefined => Token.NUM
-      case "EOL" => Token.EOL
-      case "" => Token.BAD // QUESTION TODO
       case _ => Token.UNKNOWN
     }
   }
