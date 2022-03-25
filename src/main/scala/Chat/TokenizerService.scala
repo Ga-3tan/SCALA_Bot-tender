@@ -19,8 +19,13 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
     TokenizedImpl(normalizedTokens.map(s => (s, getToken(s))))
   end tokenize
 
-  def getToken(s: String): Token = {
-    s match {
+  /**
+    * return a Token based on a string
+    * @param word a string word
+    * @return a Token
+    */
+  def getToken(word: String): Token = {
+    word match {
       case "bonjour" => Token.BONJOUR
       case "je" => Token.JE
       case "svp" => Token.SVP
@@ -36,8 +41,8 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "biere" => Token.PRODUCT
       case "croissant" => Token.PRODUCT
       // Util
-      case a if s.head == '_' => Token.PSEUDO
-      case a if s.toDoubleOption.isDefined => Token.NUM
+      case _ if word.head == '_' => Token.PSEUDO
+      case _ if word.toDoubleOption.isDefined => Token.NUM
       case _ => Token.UNKNOWN
     }
   }
