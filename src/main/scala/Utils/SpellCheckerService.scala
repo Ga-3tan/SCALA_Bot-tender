@@ -55,7 +55,7 @@ class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellChecker
 //        r(rIndex) = c
 //        return r
 //      var current: Int =  c min r(rIndex) min r(rIndex+1)
-//      if s1.head != s2.head then current += 1
+//      if current != r(rIndex) || s1.head != s2.head then current += 1
 //      r(rIndex) = c
 //      processCol(s1.tail, s2, r, rIndex+1, current)
 //    }
