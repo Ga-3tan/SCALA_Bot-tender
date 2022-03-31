@@ -29,5 +29,32 @@ object Dictionary:
     "svp" -> "svp",
     "stp" -> "svp",
     // TODO - Part 2 Step 1
+    "est" -> "etre",
+    "appelle" -> "appeller",
+
+    "voudrais" -> "vouloir",
+    "connaître" -> "connaître",
+    "savoir" -> "savoir",
+    "commander" -> "commander",
+
+    "coûte" -> "couter",
+    "coûtent" -> "couter",
+    "solde" -> "solde",
+    "prix" -> "prix",
+
+    "maison" -> "maison",
+    "cailler" -> "cailler",
+    "farmer"-> "farmer",
+    "boxer" -> "boxer",
+    "wittekop" -> "wittekop",
+    "punkipa" -> "punkipa",
+    "jackhammer" -> "jackhammer",
+    "ténébreuse" -> "tenebreuse",
+
+    // STOP WORDS
+    "le" -> "le",
+    "me" -> "me",
+    "mon" -> "mon",
+    "de" -> "de",
   )
 end Dictionary
