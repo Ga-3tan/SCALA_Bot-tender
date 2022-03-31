@@ -38,9 +38,9 @@ class Parser(tokenized: Tokenized):
       eat(ETRE)
       if curToken == ASSOIFFE then
         readToken()
-        Thirsty
+        Thirsty()
       else if curToken == AFFAME then
         readToken()
-        Hungry
+        Hungry()
       else expected(ASSOIFFE, AFFAME)
     else expected(BONJOUR, JE)

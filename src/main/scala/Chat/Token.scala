@@ -3,22 +3,29 @@ package Chat
 enum Token:
   case // Terms
        // TODO - Part 2 Step 1
-       BONJOUR, 
-       JE,
+       BONJOUR,
        SVP,
+       JE,
+       // Etat
        ASSOIFFE,
        AFFAME,
        // Actions
        ETRE,
        VOULOIR,
+       COMMANDER,
+       CONNAITRE,
+       COUTER,
        // Logic Operators
-       ET,
-       OU,
+       OPERATOR
        // Products
        PRODUCT,
+       MARQUE,
        // Util
        PSEUDO,
        NUM,
+       SOLDE,
+       PRIX,
+       STOPWORD,
        EOL,
        UNKNOWN,
        BAD
