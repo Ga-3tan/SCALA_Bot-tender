@@ -42,6 +42,7 @@ object Dictionary:
     "solde" -> "solde",
     "prix" -> "prix",
 
+    // Marques
     "maison" -> "maison",
     "cailler" -> "cailler",
     "farmer"-> "farmer",
@@ -51,10 +52,25 @@ object Dictionary:
     "jackhammer" -> "jackhammer",
     "ténébreuse" -> "tenebreuse",
 
+    // Questions
+    "quel" -> "question",
+    "quelle" -> "question",
+    "quoi" -> "question",
+    "qui" -> "question",
+    "quand" -> "question",
+    "comment" -> "question",
+    "pourquoi" -> "question",
+
     // STOP WORDS
     "le" -> "le",
+    "la" -> "le",
+    "l" -> "le",
     "me" -> "me",
+    "m" -> "me",
     "mon" -> "mon",
+    "ma" -> "mon",
     "de" -> "de",
+    "des" -> "de",
+    "d" -> "de",
   )
 end Dictionary

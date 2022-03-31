@@ -29,17 +29,38 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "bonjour" => Token.BONJOUR
       case "je" => Token.JE
       case "svp" => Token.SVP
-      case "assoiffe" => Token.ASSOIFFE
-      case "affame" => Token.AFFAME
+      case "assoiffe" => Token.ETAT_AME
+      case "affame" => Token.ETAT_AME
+      case "sold" => Token.SOLDE
+      case "prix" => Token.PRIX
+      case "question" => Token.QUESTION
       // Actions
       case "etre" => Token.ETRE
+      case "appeler" => Token.ETRE
       case "vouloir" => Token.VOULOIR
+      case "connaître" => Token.CONNAITRE
+      case "savoir" => Token.CONNAITRE
+      case "commander" => Token.COMMANDER
+      case "couter" => Token.COUTER
       // Logic Operators
-      case "et" => Token.ET
-      case "ou" => Token.OU
+      case "et" => Token.OPERATOR
+      case "ou" => Token.OPERATOR
       // Products
       case "biere" => Token.PRODUCT
       case "croissant" => Token.PRODUCT
+      case "maison" => Token.MARQUE
+      case "cailler" => Token.MARQUE
+      case "farmer" => Token.MARQUE
+      case "boxer" => Token.MARQUE
+      case "wittekop" => Token.MARQUE
+      case "punkipa" => Token.MARQUE
+      case "jackhammer" => Token.MARQUE
+      case "tenebreuse" => Token.MARQUE
+      // stop words
+      case "le" => Token.STOPWORD
+      case "me" => Token.STOPWORD
+      case "mon" => Token.STOPWORD
+      case "de" => Token.STOPWORD
       // Util
       case _ if word.head == '_' => Token.PSEUDO
       case _ if word.toDoubleOption.isDefined => Token.NUM

@@ -7,8 +7,7 @@ enum Token:
        SVP,
        JE,
        // Etat
-       ASSOIFFE,
-       AFFAME,
+       ETAT_AME,
        // Actions
        ETRE,
        VOULOIR,
@@ -16,7 +15,7 @@ enum Token:
        CONNAITRE,
        COUTER,
        // Logic Operators
-       OPERATOR
+       OPERATOR,
        // Products
        PRODUCT,
        MARQUE,
@@ -25,6 +24,7 @@ enum Token:
        NUM,
        SOLDE,
        PRIX,
+       QUESTION,
        STOPWORD,
        EOL,
        UNKNOWN,
