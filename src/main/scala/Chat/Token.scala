@@ -7,7 +7,8 @@ enum Token:
        SVP,
        JE,
        // Etat
-       ETAT_AME,
+       ASSOIFFE,
+       AFFAME,
        // Actions
        ETRE,
        VOULOIR,

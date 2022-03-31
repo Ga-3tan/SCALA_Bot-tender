@@ -29,8 +29,8 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "bonjour" => Token.BONJOUR
       case "je" => Token.JE
       case "svp" => Token.SVP
-      case "assoiffe" => Token.ETAT_AME
-      case "affame" => Token.ETAT_AME
+      case "assoiffe" => Token.ASSOIFFE
+      case "affame" => Token.AFFAME
       case "sold" => Token.SOLDE
       case "prix" => Token.PRIX
       case "question" => Token.QUESTION
