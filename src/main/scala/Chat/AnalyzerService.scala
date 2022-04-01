@@ -11,7 +11,15 @@ class AnalyzerService(productSvc: ProductService,
     * @return the result of the computation
     */
   // TODO - Part 2 Step 3
-  def computePrice(t: ExprTree): Double = ???
+  def computePrice(t: ExprTree): Double = {
+    t match {
+      case Command(t) => computePrice(t)
+      case And(tLeft, tRight) => computePrice(tLeft) + computePrice(tRight)
+      case Or(tLeft, tRight) => Math.min(computePrice(tLeft), computePrice(tRight))
+      case Products(product, brand, number) => productSvc.getPrice(product, brand) * number
+      case _ => 0.0
+    }
+  }
 
   /**
     * Return the output text of the current node, in order to write it in console.
@@ -22,7 +30,33 @@ class AnalyzerService(productSvc: ProductService,
     val inner: ExprTree => String = reply(session)
     t match
       // TODO - Part 2 Step 3
-      // Example cases
       case Thirsty() => "Eh bien, la chance est de votre côté, car nous offrons les meilleures bières de la région !"
       case Hungry() => "Pas de soucis, nous pouvons notamment vous offrir des croissants faits maisons !"
+      case Identify(pseudo: String) =>
+        session.setCurrentUser(pseudo)
+        if !accountSvc.isAccountExisting(pseudo)
+        then accountSvc.addAccount(pseudo, 30)
+        "Bonjour, " + pseudo + "."
+      case Command(t: ExprTree) =>
+        if session.getCurrentUser.isDefined
+        then
+          val v = computePrice(t)
+          "Voici donc " + reply(session)(t) +
+            " ! Cela coûte CHF " + v +
+            " et votre nouveau solde est de CHF " +
+            accountSvc.purchase(session.getCurrentUser.get, v)
+        else "Veuillez d'abord vous identifier."
+      case Solde(t) =>
+        if session.getCurrentUser.isDefined
+        then
+          "Le montant actuel de votre solde est de CHF " +
+            accountSvc.getAccountBalance(session.getCurrentUser.get)
+        else "Veuillez d'abord vous identifier."
+      case Prix(t) => "Cela coûte CHF " + computePrice(t)
+      case And(tLeft, tRight) => reply(session)(tLeft) + " et " + reply(session)(tRight)
+      case Or(tLeft, tRight) =>
+        if computePrice(tLeft) < computePrice(tRight)
+        then reply(session)(tLeft)
+        else reply(session)(tRight)
+      case Products(product, brand, number) => number.toString + " " + brand
 end AnalyzerService
