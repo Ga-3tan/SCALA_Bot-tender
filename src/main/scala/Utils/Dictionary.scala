@@ -28,7 +28,8 @@ object Dictionary:
     "ou" -> "ou",
     "svp" -> "svp",
     "stp" -> "svp",
-    // TODO - Part 2 Step 1
+
+    // Part 2 Step 1
     "est" -> "etre",
     "appelle" -> "appeller",
 

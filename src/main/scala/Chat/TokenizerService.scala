@@ -43,8 +43,8 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "commander" => Token.COMMANDER
       case "couter" => Token.COUTER
       // Logic Operators
-      case "et" => Token.OPERATOR
-      case "ou" => Token.OPERATOR
+      case "et" => Token.AND
+      case "ou" => Token.OR
       // Products
       case "biere" => Token.PRODUCT
       case "croissant" => Token.PRODUCT
