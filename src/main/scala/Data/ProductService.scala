@@ -4,7 +4,19 @@ trait ProductService:
   type BrandName = String
   type ProductName = String
 
+  /**
+    * Return the price of the brand name. If product not found then return NaN.
+    * @param product product name of the brand
+    * @param brand brand name to get the price
+    * @return price of the brand
+    */
   def getPrice(product: ProductName, brand: BrandName): Double
+
+  /**
+    * Return the default brand of the product. If not found then return empty string
+    * @param product product name
+    * @return get the default brand from the product name
+    */
   def getDefaultBrand(product: ProductName): BrandName
 
 class ProductImpl extends ProductService:
@@ -21,7 +33,6 @@ class ProductImpl extends ProductService:
   )
 
   // TODO - Part 2 Step 2
-  // Return the price of the brand name. If product not found then return NaN.
   def getPrice(product: ProductName, brand: BrandName): Double = {
     brands.getOrElse(brand,
       brands.getOrElse(getDefaultBrand(product),
@@ -29,7 +40,6 @@ class ProductImpl extends ProductService:
     )
   }
 
-  // Return the default brand name of the product. If not found then return empty string
   def getDefaultBrand(product: ProductName): BrandName = {
     product match {
       case "croissant" => "maison"
