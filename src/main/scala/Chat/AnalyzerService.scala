@@ -46,7 +46,7 @@ class AnalyzerService(productSvc: ProductService,
             " et votre nouveau solde est de CHF " +
             accountSvc.purchase(session.getCurrentUser.get, v)
         else "Veuillez d'abord vous identifier."
-      case Solde(t) =>
+      case Solde() =>
         if session.getCurrentUser.isDefined
         then
           "Le montant actuel de votre solde est de CHF " +

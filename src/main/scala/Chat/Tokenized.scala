@@ -17,7 +17,7 @@ class TokenizedImpl(val tokens: Array[(String, Token)]) extends Tokenized:
     if index != tokens.length then
       output = tokens(index)
     index += 1
-    output
-
+    if output._2 == STOPWORD then nextToken() // Ignore les stopwords
+    else output
 
 end TokenizedImpl

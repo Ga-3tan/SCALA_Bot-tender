@@ -61,6 +61,11 @@ object Dictionary:
     "quand" -> "question",
     "comment" -> "question",
     "pourquoi" -> "question",
+    "combien" -> "question",
+
+    // Num
+    "un" -> "1",
+    "une" -> "1",
 
     // STOP WORDS
     "le" -> "le",

@@ -31,7 +31,7 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "svp" => Token.SVP
       case "assoiffe" => Token.ASSOIFFE
       case "affame" => Token.AFFAME
-      case "sold" => Token.SOLDE
+      case "solde" => Token.SOLDE
       case "prix" => Token.PRIX
       case "question" => Token.QUESTION
       // Actions
