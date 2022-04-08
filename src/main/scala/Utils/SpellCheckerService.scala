@@ -37,16 +37,15 @@ class SpellCheckerImpl(val dictionary: Map[String, String]) extends SpellChecker
       case _ => 1 + (stringDistance(s1.tail, s2) min stringDistance(s1, s2.tail) min stringDistance(s1.tail, s2.tail))
 
   def getClosestWordInDictionary(misspelledWord: String): String =
-    if misspelledWord.toDoubleOption.isDefined || misspelledWord.head == '_' then return misspelledWord
-
-    val nearestWord = dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
-      val dist = stringDistance(value._1, misspelledWord)
-      if dist < acc._2 || (dist == acc._2 && value._1 < acc._1) then
-        (value._1, dist)
-      else
-        acc
-    })
-
-    dictionary(nearestWord._1)
+    if misspelledWord.toDoubleOption.isDefined || misspelledWord.head == '_' then misspelledWord
+    else
+      val nearestWord = dictionary.foldLeft(("", Int.MaxValue))((acc, value) => {
+        val dist = stringDistance(value._1, misspelledWord)
+        if dist < acc._2 || (dist == acc._2 && value._1 < acc._1) then
+          (value._1, dist)
+        else
+          acc
+      })
+      dictionary(nearestWord._1)
 
 end SpellCheckerImpl

@@ -10,6 +10,7 @@ trait Tokenized:
     */
   def nextToken(): (String, Token)
 
+// TODO : Avoid var ? How ?
 class TokenizedImpl(val tokens: Array[(String, Token)]) extends Tokenized:
   var index = 0
   def nextToken(): (String, Token) =

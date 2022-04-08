@@ -14,7 +14,7 @@ object ClinksCalculator:
   def factorial(n: Int): BigInt = {
     @tailrec
     def loop(acc: BigInt, n: Int): BigInt = {
-      if n == 0 then acc
+      if n <= 0 then acc
       else loop(acc*n, n-1)
     }
     loop(1 , n)
@@ -27,6 +27,7 @@ object ClinksCalculator:
     * @return n choose k
     */
   def calculateCombination(n: Int, k: Int): Int = {
-    (factorial(n)/factorial(k)/factorial(n-k)).toInt
+    if k > n then 0
+    else (factorial(n)/factorial(k)/factorial(n-k)).toInt
   }
 end ClinksCalculator

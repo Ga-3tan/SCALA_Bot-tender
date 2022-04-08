@@ -46,7 +46,7 @@ class Parser(tokenized: Tokenized):
     else if curToken == QUESTION then
       readToken()
       parseQUESTION()
-    else expected(BONJOUR, JE, QUESTION)
+    else expected(JE, QUESTION)
   }
 
   def parseETRE(): ExprTree = {

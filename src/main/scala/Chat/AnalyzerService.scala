@@ -28,6 +28,7 @@ class AnalyzerService(productSvc: ProductService,
   def reply(session: Session)(t: ExprTree): String =
     // you can use this to avoid having to pass the session when doing recursion
     val inner: ExprTree => String = reply(session)
+
     t match
       // TODO - Part 2 Step 3
       case Thirsty() => "Eh bien, la chance est de votre côté, car nous offrons les meilleures bières de la région !"
@@ -41,7 +42,7 @@ class AnalyzerService(productSvc: ProductService,
         if session.getCurrentUser.isDefined
         then
           val v = computePrice(t)
-          "Voici donc " + reply(session)(t) +
+          "Voici donc " + inner(t) +
             " ! Cela coûte CHF " + v +
             " et votre nouveau solde est de CHF " +
             accountSvc.purchase(session.getCurrentUser.get, v)
@@ -53,10 +54,10 @@ class AnalyzerService(productSvc: ProductService,
             accountSvc.getAccountBalance(session.getCurrentUser.get)
         else "Veuillez d'abord vous identifier."
       case Prix(t) => "Cela coûte CHF " + computePrice(t)
-      case And(tLeft, tRight) => reply(session)(tLeft) + " et " + reply(session)(tRight)
+      case And(tLeft, tRight) => inner(tLeft) + " et " + inner(tRight)
       case Or(tLeft, tRight) =>
         if computePrice(tLeft) < computePrice(tRight)
-        then reply(session)(tLeft)
-        else reply(session)(tRight)
+        then inner(tLeft)
+        else inner(tRight)
       case Products(product, brand, number) => number.toString + " " + brand
 end AnalyzerService
