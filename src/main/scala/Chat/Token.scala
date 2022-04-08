@@ -16,7 +16,7 @@ enum Token:
        CONNAITRE,
        COUTER,
        // Logic Operators
-       OPERATOR
+       OPERATOR,
        // Products
        PRODUCT,
        MARQUE,
