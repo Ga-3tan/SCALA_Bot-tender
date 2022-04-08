@@ -9,14 +9,13 @@ sealed trait ExprTree
   * Declarations of the nodes' types.
   */
 object ExprTree:
-  // TODO - Part 2 Step 3
-  // Example cases
+  // Part 2 Step 3
   case class Thirsty() extends ExprTree
   case class Hungry() extends ExprTree
-  case class Identify(pseudo: String) extends ExprTree
-  case class Command(t: ExprTree) extends ExprTree
-  case class Solde() extends ExprTree
-  case class Prix(t: ExprTree) extends ExprTree
+  case class Identify(user: String) extends ExprTree
+  case class RequestOrder(t: ExprTree) extends ExprTree
+  case class RequestBalance() extends ExprTree
+  case class RequestPrice(t: ExprTree) extends ExprTree
   case class And(tLeft: ExprTree, tRight: ExprTree) extends ExprTree
   case class Or(tLeft: ExprTree, tRight: ExprTree) extends ExprTree
-  case class Products(product: String, brand: String, number: Int) extends ExprTree
+  case class Order(product: String, brand: String, number: Int) extends ExprTree

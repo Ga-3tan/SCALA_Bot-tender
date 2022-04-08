@@ -1,5 +1,7 @@
 package Data
 
+import Utils.Dictionary
+
 trait ProductService:
   type BrandName = String
   type ProductName = String
@@ -21,7 +23,8 @@ trait ProductService:
 
 class ProductImpl extends ProductService:
 
-  val brands: Map[String, Double] = Map(
+  // Part 2 Step 2
+  val brandsPrice: Map[String, Double] = Map(
     "farmer"-> 1,
     "boxer" -> 1,
     "wittekop" -> 2,
@@ -32,18 +35,16 @@ class ProductImpl extends ProductService:
     "cailler" -> 2,
   )
 
-  // TODO - Part 2 Step 2
   def getPrice(product: ProductName, brand: BrandName): Double = {
-    brands.getOrElse(brand,
-      brands.getOrElse(getDefaultBrand(product),
-        Double.NaN)
+    brandsPrice.getOrElse(brand,
+      brandsPrice.getOrElse(getDefaultBrand(product), Double.NaN)
     )
   }
 
   def getDefaultBrand(product: ProductName): BrandName = {
     product match {
-      case "croissant" => "maison"
       case "biere" => "boxer"
+      case "croissant" => "maison"
       case _ => ""
     }
   }

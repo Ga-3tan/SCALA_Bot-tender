@@ -2,7 +2,7 @@ package Chat
 
 class UnexpectedTokenException(msg: String) extends Exception(msg){}
 
-// TODO - step 4
+// step 4
 class Parser(tokenized: Tokenized):
   import ExprTree._
   import Chat.Token._
@@ -30,7 +30,7 @@ class Parser(tokenized: Tokenized):
     throw new UnexpectedTokenException(s"Expected: $expectedTokens, found: $curToken")
 
   /** the root method of the parser: parses an entry phrase */
-  // TODO - Part 2 Step 4
+  // Part 2 Step 4
   def parsePhrases() : ExprTree = {
     if curToken == BONJOUR then readToken()
 
@@ -66,22 +66,22 @@ class Parser(tokenized: Tokenized):
       readToken()
       if curToken == SOLDE then
         readToken()
-        Solde()
+        RequestBalance()
       else if curToken == QUESTION then
         readToken()
         parseQUESTION()
       else if curToken == PRIX then
         readToken()
-        Prix(parseProducts())
+        RequestPrice(parseProducts())
       else expected(SOLDE, QUESTION)
     else if curToken == SOLDE then
       readToken()
-      Solde()
+      RequestBalance()
     else if curToken == COMMANDER then
       readToken()
-      Command(parseProducts())
+      RequestOrder(parseProducts())
     else if curToken == NUM then // Pas de readToken après !!
-      Command(parseProducts())
+      RequestOrder(parseProducts())
     else expected(CONNAITRE, COMMANDER)
   }
 
@@ -89,10 +89,10 @@ class Parser(tokenized: Tokenized):
     if curToken == ETRE then
       readToken()
       eat(PRIX)
-      Prix(parseProducts())
+      RequestPrice(parseProducts())
     else if curToken == COUTER then
       readToken()
-      Prix(parseProducts())
+      RequestPrice(parseProducts())
     else expected(ETRE, COUTER)
   }
 
@@ -114,7 +114,7 @@ class Parser(tokenized: Tokenized):
 
     if brand.isEmpty && product.isEmpty then expected(PRODUCT, MARQUE)
 
-    Products(product, brand, num)
+    Order(product, brand, num)
   }
 
   def parseProducts(tLeft: ExprTree = null): ExprTree = {
