@@ -27,7 +27,7 @@ class ProductImpl extends ProductService:
     "wittekop" -> 2,
     "punkipa" -> 3,
     "jackhammer" -> 3,
-    "ténébreuse" -> 4,
+    "tenebreuse" -> 4,
     "maison" -> 2,
     "cailler" -> 2,
   )

@@ -36,7 +36,7 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "question" => Token.QUESTION
       // Actions
       case "etre" => Token.ETRE
-      case "appeler" => Token.ETRE
+      case "appeller" => Token.ETRE
       case "vouloir" => Token.VOULOIR
       case "connaître" => Token.CONNAITRE
       case "savoir" => Token.CONNAITRE

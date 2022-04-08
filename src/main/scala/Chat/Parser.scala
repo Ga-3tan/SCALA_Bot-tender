@@ -101,14 +101,18 @@ class Parser(tokenized: Tokenized):
     val num = curValue.toInt
     readToken()
 
-    if curToken != PRODUCT then expected(PRODUCT)
-    val product: String = curValue
-    readToken()
-
     var brand: String = ""
+    var product: String = ""
+
+    if curToken == PRODUCT then
+      product = curValue
+      readToken()
+
     if curToken == MARQUE then
       brand = curValue
       readToken()
+
+    if brand.isEmpty && product.isEmpty then expected(PRODUCT, MARQUE)
 
     Products(product, brand, num)
   }
@@ -119,8 +123,10 @@ class Parser(tokenized: Tokenized):
       case null => tRight = parseOneProduct()
       case _ =>
         if curToken == AND then
+          readToken()
           tRight = And(tLeft, parseOneProduct())
         else if curToken == OR then
+          readToken()
           tRight = Or(tLeft, parseOneProduct())
     }
     if curToken == AND || curToken == OR then

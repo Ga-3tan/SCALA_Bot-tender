@@ -34,10 +34,10 @@ class AnalyzerService(productSvc: ProductService,
       case Thirsty() => "Eh bien, la chance est de votre côté, car nous offrons les meilleures bières de la région !"
       case Hungry() => "Pas de soucis, nous pouvons notamment vous offrir des croissants faits maisons !"
       case Identify(pseudo: String) =>
-        session.setCurrentUser(pseudo)
-        if !accountSvc.isAccountExisting(pseudo)
-        then accountSvc.addAccount(pseudo, 30)
-        "Bonjour, " + pseudo + "."
+        session.setCurrentUser(pseudo.tail)
+        if !accountSvc.isAccountExisting(pseudo.tail)
+        then accountSvc.addAccount(pseudo.tail, 30)
+        "Bonjour, " + pseudo.tail + "."
       case Command(t: ExprTree) =>
         if session.getCurrentUser.isDefined
         then
@@ -59,5 +59,7 @@ class AnalyzerService(productSvc: ProductService,
         if computePrice(tLeft) < computePrice(tRight)
         then inner(tLeft)
         else inner(tRight)
-      case Products(product, brand, number) => number.toString + " " + brand
+      case Products(product, brand, number) =>
+        if brand == null then number.toString + " " + productSvc.getDefaultBrand(product)
+        else number.toString + " " + brand
 end AnalyzerService
