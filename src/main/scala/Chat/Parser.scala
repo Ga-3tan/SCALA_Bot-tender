@@ -32,15 +32,67 @@ class Parser(tokenized: Tokenized):
   /** the root method of the parser: parses an entry phrase */
   // TODO - Part 2 Step 4
   def parsePhrases() : ExprTree =
-    if curToken == BONJOUR then readToken()
+    if curToken == BONJOUR then
+      readToken()
     if curToken == JE then
       readToken()
+      if curToken == VOULOIR then
+        // FROM HERE : SHOULD BE LOGGED
+        readToken()
+        if curToken == CONNAITRE then
+          readToken()
+          eat(SOLDE)
+          Balance()
+        else if curToken == COMMANDER then
+          readToken()
+          handleProductRequest(COMMANDER)
+        else expected(CONNAITRE, COMMANDER)
+      else if curToken == ETRE then
+        readToken()
+        if curToken == ASSOIFFE then
+          readToken()
+          Thirsty()
+        else if curToken == AFFAME then
+          readToken()
+          Hungry()
+        else if curToken == PSEUDO then
+          readToken()
+          Identification(curValue)
+        else expected(ASSOIFFE, AFFAME, PSEUDO)
+      else expected(VOULOIR, ETRE)
+    else if curToken == QUEL then
+      readToken()
       eat(ETRE)
-      if curToken == ASSOIFFE then
-        readToken()
-        Thirsty()
-      else if curToken == AFFAME then
-        readToken()
-        Hungry()
-      else expected(ASSOIFFE, AFFAME)
-    else expected(BONJOUR, JE)
+      eat(PRIX)
+      handleProductRequest(COUTER)
+    else if curToken == COMBIEN then
+      readToken()
+      eat(COUTER)
+      handleProductRequest(COUTER)
+    else expected(JE, COUTER)
+
+  def handleProductRequest(requestType : COUTER | COMMANDER): ExprTree =
+    val quantity = eat(NUM)
+    val productType = eat(PRODUCT)
+    val prodctBrand = if curToken == MARQUE then
+      eat(MARQUE)
+    else
+      readToken()
+      null
+
+    // Gets the correct request from the requestType
+    val request: ExprTree = if requestType == COUTER then
+      Cost(quantity, productType, prodctBrand)
+    else if requestType == COMMANDER then
+      Order(quantity, productType, prodctBrand)
+    else expected(COUTER, COMMANDER)
+
+    // Checks if there is another request else return the request
+    if curToken == ET || curToken == OU then
+      val request2 = handleProductRequest(requestType)
+      if curToken == ET then
+        And(request1, request2)
+      else if curToken == OU then
+        Or(request1, request2)
+    else
+      request
