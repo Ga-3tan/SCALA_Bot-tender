@@ -19,6 +19,8 @@ enum Token:
   COMBIEN,
   // Logic Operators
   OPERATOR,
+  ET,
+  OU,
   // Products
   PRODUCT,
   MARQUE,

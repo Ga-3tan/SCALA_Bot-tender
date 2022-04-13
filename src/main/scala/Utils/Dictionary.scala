@@ -30,13 +30,15 @@ object Dictionary:
     "stp" -> "svp",
     // TODO - Part 2 Step 1
     "est" -> "etre",
-    "appelle" -> "appeller",
+    "appelle" -> "appeler",
 
     "voudrais" -> "vouloir",
-    "connaître" -> "connaître",
-    "savoir" -> "savoir",
+    "connaître" -> "connaitre",
+    "savoir" -> "connaitre",
     "commander" -> "commander",
 
+    "quel" -> "quel",
+    "combien" -> "combien",
     "coûte" -> "couter",
     "coûtent" -> "couter",
     "solde" -> "solde",
@@ -52,8 +54,12 @@ object Dictionary:
     "ténébreuse" -> "tenebreuse",
 
     // STOP WORDS
+    "l" -> "le",
+    "la" -> "le",
     "le" -> "le",
     "me" -> "me",
+    "m" -> "me",
+    "ma" -> "mon",
     "mon" -> "mon",
     "de" -> "de",
   )

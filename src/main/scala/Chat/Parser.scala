@@ -1,9 +1,10 @@
 package Chat
 
-class UnexpectedTokenException(msg: String) extends Exception(msg){}
+class UnexpectedTokenException(msg: String) extends Exception(msg) {}
 
 // TODO - step 4
 class Parser(tokenized: Tokenized):
+
   import ExprTree._
   import Chat.Token._
 
@@ -11,10 +12,17 @@ class Parser(tokenized: Tokenized):
   var curTuple: (String, Token) = tokenized.nextToken()
 
   def curValue: String = curTuple._1
+
   def curToken: Token = curTuple._2
 
   /** Reads the next token and assigns it into the global variable curTuple */
-  def readToken(): Unit = curTuple = tokenized.nextToken()
+  /** When meeting a STOPWORD Token, ignore it and skip to the next token   */
+  def readToken(): Unit =
+    val token = tokenized.nextToken()
+    if token._2 == Token.STOPWORD then
+      readToken()
+    else
+      curTuple = token
 
   /** "Eats" the expected token and returns it value, or terminates with an error. */
   private def eat(token: Token): String =
@@ -31,7 +39,7 @@ class Parser(tokenized: Tokenized):
 
   /** the root method of the parser: parses an entry phrase */
   // TODO - Part 2 Step 4
-  def parsePhrases() : ExprTree =
+  def parsePhrases(): ExprTree =
     if curToken == BONJOUR then
       readToken()
     if curToken == JE then
@@ -42,57 +50,57 @@ class Parser(tokenized: Tokenized):
         if curToken == CONNAITRE then
           readToken()
           eat(SOLDE)
-          Balance()
+          Balance() // Check balance
         else if curToken == COMMANDER then
           readToken()
-          handleProductRequest(COMMANDER)
+          OrderRequest(handleProductRequest(COMMANDER)) // Handle request order
         else expected(CONNAITRE, COMMANDER)
       else if curToken == ETRE then
         readToken()
         if curToken == ASSOIFFE then
           readToken()
-          Thirsty()
+          Thirsty() // Thirsty
         else if curToken == AFFAME then
           readToken()
-          Hungry()
+          Hungry() // Hungry
         else if curToken == PSEUDO then
-          readToken()
-          Identification(curValue)
+          Identification(curValue) // Identify user
         else expected(ASSOIFFE, AFFAME, PSEUDO)
       else expected(VOULOIR, ETRE)
     else if curToken == QUEL then
       readToken()
       eat(ETRE)
       eat(PRIX)
-      handleProductRequest(COUTER)
+      CostRequest(handleProductRequest(COUTER)) // Handle price request
     else if curToken == COMBIEN then
       readToken()
       eat(COUTER)
-      handleProductRequest(COUTER)
+      CostRequest(handleProductRequest(COUTER)) // Handle price request
     else expected(JE, COUTER)
 
-  def handleProductRequest(requestType : COUTER | COMMANDER): ExprTree =
-    val quantity = eat(NUM)
+  def handleProductRequest(requestType: Token): ExprTree =
+    val quantity = eat(NUM).toInt
     val productType = eat(PRODUCT)
     val prodctBrand = if curToken == MARQUE then
       eat(MARQUE)
     else
-      readToken()
       null
 
     // Gets the correct request from the requestType
     val request: ExprTree = if requestType == COUTER then
-      Cost(quantity, productType, prodctBrand)
+      Cost(Order(quantity, productType, prodctBrand)) // Compute Cost
     else if requestType == COMMANDER then
-      Order(quantity, productType, prodctBrand)
+      Order(quantity, productType, prodctBrand) // Compute Order
     else expected(COUTER, COMMANDER)
 
     // Checks if there is another request else return the request
-    if curToken == ET || curToken == OU then
+    if curToken == ET then
+      readToken()
       val request2 = handleProductRequest(requestType)
-      if curToken == ET then
-        And(request1, request2)
-      else if curToken == OU then
-        Or(request1, request2)
+      And(request, request2) // Handle And request
+    else if curToken == OU then
+      readToken()
+      val request2 = handleProductRequest(requestType)
+      Or(request, request2) // Handle Or request
     else
       request

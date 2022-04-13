@@ -48,7 +48,10 @@ class AccountImpl extends AccountService :
 
   def purchase(user: String, amount: Double): Double =
     val newAmount = getAccountBalance(user) - amount
-    accounts.update(user, newAmount)
-    newAmount
+    if newAmount >= 0 then
+      accounts.update(user, newAmount)
+      newAmount
+    else
+      -1.0 // error
 
 end AccountImpl
