@@ -4,7 +4,7 @@ import Utils.Dictionary
 
 trait ProductService:
   type BrandName = String
-  type ProductName = String
+  type ProductName = String // TODO add enum ?
 
   /**
     * Return the price of the brand name. If product not found then return NaN.
@@ -21,18 +21,20 @@ trait ProductService:
     */
   def getDefaultBrand(product: ProductName): BrandName
 
+
+
 class ProductImpl extends ProductService:
 
   // Part 2 Step 2
   val brandsPrice: Map[String, Double] = Map(
-    "farmer"-> 1,
-    "boxer" -> 1,
-    "wittekop" -> 2,
-    "punkipa" -> 3,
-    "jackhammer" -> 3,
-    "tenebreuse" -> 4,
-    "maison" -> 2,
-    "cailler" -> 2,
+    "farmer"-> 1.0,
+    "boxer" -> 1.0,
+    "wittekop" -> 2.0,
+    "punkipa" -> 3.0,
+    "jackhammer" -> 3.0,
+    "tenebreuse" -> 4.0,
+    "maison" -> 2.0,
+    "cailler" -> 2.0,
   )
 
   def getPrice(product: ProductName, brand: BrandName): Double = {

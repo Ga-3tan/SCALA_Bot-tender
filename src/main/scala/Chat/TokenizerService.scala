@@ -6,13 +6,14 @@ import Utils.SpellCheckerService
 class TokenizerService(spellCheckerSvc: SpellCheckerService):
   /**
     * Separate the user's input into tokens
+    *
     * @param input The user's input
     * @return A Tokenizer which allows iteration over the tokens of the input
     */
-  // TODO - Part 2 Step 1
+  // Part 2 Step 1
   def tokenize(input: String): Tokenized =
     val normalizedTokens = input.replaceAll("[,.!?*]", "")
-      .replaceAll("\'", " ")
+      .replaceAll("['’]", " ")
       .split("\\s+") // one or more space
       .map(rawToken => spellCheckerSvc.dictionary.getOrElse(rawToken, spellCheckerSvc.getClosestWordInDictionary(rawToken)))
 
@@ -21,6 +22,7 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
 
   /**
     * return a Token based on a string
+    *
     * @param word a string word
     * @return a Token
     */
@@ -33,21 +35,24 @@ class TokenizerService(spellCheckerSvc: SpellCheckerService):
       case "affame" => Token.AFFAME
       case "solde" => Token.SOLDE
       case "prix" => Token.PRIX
-      case "question" => Token.QUESTION
       // Actions
       case "etre" => Token.ETRE
-      case "appeller" => Token.ETRE
+      case "appeler" => Token.ETRE
       case "vouloir" => Token.VOULOIR
-      case "connaître" => Token.CONNAITRE
+      case "connaitre" => Token.CONNAITRE
       case "savoir" => Token.CONNAITRE
-      case "commander" => Token.COMMANDER
       case "couter" => Token.COUTER
+      case "commander" => Token.COMMANDER
+      // Question
+      case "combien" => Token.COMBIEN
+      case "quel" => Token.QUEL
       // Logic Operators
-      case "et" => Token.AND
-      case "ou" => Token.OR
+      case "et" => Token.ET
+      case "ou" => Token.OU
       // Products
-      case "biere" => Token.PRODUCT
-      case "croissant" => Token.PRODUCT
+      case "biere" => Token.PRODUIT
+      case "croissant" => Token.PRODUIT
+      // Brands
       case "maison" => Token.MARQUE
       case "cailler" => Token.MARQUE
       case "farmer" => Token.MARQUE

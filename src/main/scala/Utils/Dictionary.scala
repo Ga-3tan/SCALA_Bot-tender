@@ -31,13 +31,16 @@ object Dictionary:
 
     // Part 2 Step 1
     "est" -> "etre",
-    "appelle" -> "appeller",
+    "appelle" -> "appeler",
 
     "voudrais" -> "vouloir",
-    "connaître" -> "connaître",
-    "savoir" -> "savoir",
+    "connaître" -> "connaitre",
+    "savoir" -> "connaitre",
     "commander" -> "commander",
 
+    "quel" -> "quel",
+    "quelle" -> "quel",
+    "combien" -> "combien",
     "coûte" -> "couter",
     "coûtent" -> "couter",
     "solde" -> "solde",
@@ -53,21 +56,13 @@ object Dictionary:
     "jackhammer" -> "jackhammer",
     "ténébreuse" -> "tenebreuse",
 
-    // Questions
-    "quel" -> "question",
-    "quelle" -> "question",
-    "quoi" -> "question",
-    "qui" -> "question",
-    "quand" -> "question",
-    "comment" -> "question",
-    "pourquoi" -> "question",
-    "combien" -> "question",
-
     // Num
     "un" -> "1",
     "une" -> "1",
 
     // STOP WORDS
+    "l" -> "le",
+    "la" -> "le",
     "le" -> "le",
     "la" -> "le",
     "l" -> "le",
