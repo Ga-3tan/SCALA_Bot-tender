@@ -49,9 +49,6 @@ class Parser(tokenized: Tokenized):
         readToken()
         parseVOULOIR()
       else expected(ETRE, VOULOIR)
-    /*else if curToken == QUESTION then
-      readToken()
-      //parseQUESTION()*/
     else if curToken == QUEL then
       readToken()
       eat(ETRE)
