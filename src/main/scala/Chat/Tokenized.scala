@@ -10,13 +10,10 @@ trait Tokenized:
     */
   def nextToken(): (String, Token)
 
-// TODO : Avoid var ? How ?
 class TokenizedImpl(val tokens: Array[(String, Token)]) extends Tokenized:
   var index = 0
   def nextToken(): (String, Token) =
-    var output = ("EOL", Token.EOL)
-    if index < tokens.length then
-      output = tokens(index)
+    val output = if index < tokens.length then tokens(index) else ("EOL", Token.EOL)
     index += 1
     if output._2 == STOPWORD then nextToken() // Ignore les stopwords
     else output
